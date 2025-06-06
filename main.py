@@ -1,6 +1,7 @@
 import os
 import re
 from itertools import combinations
+import csv
 
 # classe base de grafos que as diferentes representações seguem
 class Grafo:
@@ -49,7 +50,7 @@ class GrafoMatriz(Grafo):
         # lembrando que são grafos não direcionados
         self.matriz[j][i] = 1
     def getArestas(self, vertice: int) -> list[int]:
-        return []
+        return [idx for idx, valor in enumerate(self.matriz) if valor == 1]
     def arestaExiste(self, vertice: int, verticeQueConecta: int) -> bool:
         return self.matriz[vertice][verticeQueConecta] == 1
     def getTermo(self, vertice: int) -> str:
@@ -112,3 +113,16 @@ def GerarGrafoCoocorrencia(texts: list[list[str]], n: int, w: int = 5):
                 if not grafo.arestaExiste(u, v):
                     grafo.adicionarAresta(u, v)
     return grafo
+
+
+# Função gera um CSV do grafo para ser lido pelo gephi e gerar a visualização
+# o gephi suporta uma serie de formatos essa função retorna um CSV como Adjacency List https://gephi.org/users/supported-graph-formats/csv-format/
+def exportToCSV(grafo: Grafo):
+    with open("output.csv", 'w',newline='') as csvFile:
+        csvWriter = csv.writer(csvFile, delimiter=';')
+        for i in range(500):
+            row = []
+            row.append(grafo.getTermo(i))
+            for vertice in grafo.getArestas(i):
+                row.append(grafo.getTermo(vertice))
+            csvWriter.writerow(row)
