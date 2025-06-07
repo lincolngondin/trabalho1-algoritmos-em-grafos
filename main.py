@@ -15,8 +15,10 @@ class Grafo:
     # O algoritmo 1 necessita dessa checagem para evitar arestas multiplas
     def arestaExiste(self, vertice: int, verticeQueConecta: int) -> bool:
         return False
-    def getTermo(self, vertice: int) -> str :
+    def getTermo(self, vertice: int) -> str:
         return ""
+    def getQuantidadeDeVertices(self) -> int:
+        return 0
 
 
 # classe derivada da classe base Grafo que representa um grafo usando uma lista de adjacência
@@ -24,18 +26,25 @@ class GrafoLista(Grafo):
     def __init__(self, n: int, termos: list[str]):
         self.vertices: list[list[int]] = [[] for x in range(n)]
         self.termos = termos.copy()
+        self.n = n
     def adicionarAresta(self, i: int, j: int):
-        self.vertices[i].append(j)
+        # eu checo antes de adicionar para evitar copias
+        # a implementação não permite arestas multiplas
+        if j not in self.vertices[i]:
+            self.vertices[i].append(j)
         # eu adiciono o vizinho no vertice oposto também já que a natureza da representação em lista de adjacência obriga isso
         # inicialmente isso era feito na funcao que gerava o grafo, porém não é correto fazer isso, dado
-        # que esse é um detalhe de implementação.
-        self.vertices[j].append(i)
+        # que esse é um detalhe de implementação. Eu checo se a aresta ja não existe antes para evitar criar novamente.
+        if i not in self.vertices[j]:
+            self.vertices[j].append(i)
     def getArestas(self, vertice: int) -> list[int]:
         return self.vertices[vertice]
     def arestaExiste(self, vertice: int, verticeQueConecta: int) -> bool:
         return verticeQueConecta in self.vertices[vertice]
     def getTermo(self, vertice: int) -> str:
         return self.termos[vertice]
+    def getQuantidadeDeVertices(self) -> int:
+        return self.n
 
 
 # classe derivada da classe base Grafo que representa um grafo usando uma matriz de adjacência
@@ -44,17 +53,20 @@ class GrafoMatriz(Grafo):
         # cria a matriz nxn e inicia todos os valores dela para zero
         self.matriz = [[0 for _ in range(n)] for _ in range(n)]
         self.termos = termos.copy()
+        self.n = n
     def adicionarAresta(self, i: int, j: int):
         self.matriz[i][j] = 1
         # o oposto também deve ocorrer se a aresta (i,j) existe na representação a aresta (j,i) também existe
         # lembrando que são grafos não direcionados
         self.matriz[j][i] = 1
     def getArestas(self, vertice: int) -> list[int]:
-        return [idx for idx, valor in enumerate(self.matriz) if valor == 1]
+        return [idx for idx, valor in enumerate(self.matriz[vertice]) if valor == 1]
     def arestaExiste(self, vertice: int, verticeQueConecta: int) -> bool:
         return self.matriz[vertice][verticeQueConecta] == 1
     def getTermo(self, vertice: int) -> str:
         return self.termos[vertice]
+    def getQuantidadeDeVertices(self) -> int:
+        return self.n
 
 # extrai todos as termos de um texto -
 def extrairTermos(text: str) -> list[str]:
@@ -126,3 +138,92 @@ def exportToCSV(grafo: Grafo):
             for vertice in grafo.getArestas(i):
                 row.append(grafo.getTermo(vertice))
             csvWriter.writerow(row)
+
+#texts = extrairTextosBaseDeDados("./textos")
+#graph = GerarGrafoCoocorrencia(texts, 500)
+#exportToCSV(graph)
+
+grafoTeste = GrafoLista(9, ['1','2','3','4','5','6','7','8','9'])
+# componente biconexa 1
+grafoTeste.adicionarAresta(0,1)
+grafoTeste.adicionarAresta(0,2)
+grafoTeste.adicionarAresta(1,0)
+grafoTeste.adicionarAresta(1,2)
+grafoTeste.adicionarAresta(1,4)
+grafoTeste.adicionarAresta(2,0)
+grafoTeste.adicionarAresta(2,1)
+# componente biconexa 2
+grafoTeste.adicionarAresta(4,1)
+grafoTeste.adicionarAresta(4,3)
+grafoTeste.adicionarAresta(4,5)
+grafoTeste.adicionarAresta(3,4)
+grafoTeste.adicionarAresta(3,5)
+grafoTeste.adicionarAresta(5,4)
+grafoTeste.adicionarAresta(5,3)
+grafoTeste.adicionarAresta(5,6)
+# componente biconexa
+grafoTeste.adicionarAresta(6,5)
+grafoTeste.adicionarAresta(6,8)
+grafoTeste.adicionarAresta(6,7)
+grafoTeste.adicionarAresta(7,6)
+grafoTeste.adicionarAresta(7,8)
+grafoTeste.adicionarAresta(8,6)
+grafoTeste.adicionarAresta(8,7)
+for vertice in range(9):
+    print(f"{grafoTeste.getTermo(vertice)}: {[grafoTeste.getTermo(x) for x in grafoTeste.getArestas(vertice)]}")
+
+# Algoritmo de tarjan. A funcao retorna uma lista de lista com as componentes fortemente conexas 
+# ou no caso do grafos não direcionados do exemplo as componentes biconexas
+def algoritmoTarjan(grafo: Grafo):
+    stack = []
+    lo = [0 for _ in range(grafo.getQuantidadeDeVertices())]
+    pre = [-1 for _ in range(grafo.getQuantidadeDeVertices())]
+    sc = [-1 for _ in range(grafo.getQuantidadeDeVertices())]
+    cnt = 0
+    k = 0
+
+    # Implementacao da funcao dfs
+    # sera criada aqui dentro para evitar ter que usar variavel global
+    def dfsRstrongCompsT(grafo: Grafo, vertice: int, sc: list[int], pai: int = -1):
+        nonlocal cnt, pre, k, stack, lo
+        pre[vertice] = cnt
+        cnt+=1
+        stack.append(vertice)
+        lo[vertice] = pre[vertice]
+
+        for w in grafo.getArestas(vertice):
+            if w == pai:
+                continue
+            if pre[w] == -1:
+                dfsRstrongCompsT(grafo, w, sc, vertice)
+                lo[vertice] = min(lo[vertice], lo[w])
+            elif pre[w] < pre[vertice] and sc[w] == -1:
+                lo[vertice] = min(lo[vertice], pre[w])
+
+        if lo[vertice] == pre[vertice]:
+            while True:
+                u = stack.pop()
+                sc[u] = k
+                if u == vertice:
+                    break
+            k+=1
+
+
+
+    for vertice in range(grafo.getQuantidadeDeVertices()):
+        if pre[vertice] == -1:
+            dfsRstrongCompsT(grafo, vertice, sc)
+
+    componentes = [[] for _ in range(k)]
+    for vertice in range(grafo.getQuantidadeDeVertices()):
+        componentes[sc[vertice]].append(vertice)
+
+    return componentes
+
+def algoritmoForcaBruta(grafo: Grafo) -> list[list[int]]:
+    return [[]]
+
+componentes = algoritmoTarjan(grafoTeste)
+componentes2 = algoritmoForcaBruta(grafoTeste)
+print(componentes)
+print(componentes2)
