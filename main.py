@@ -2,6 +2,8 @@ import os
 import re
 from itertools import combinations
 import csv
+import time
+import matplotlib.pyplot as plt
 
 # classe base de grafos que as diferentes representações seguem
 class Grafo:
@@ -102,10 +104,16 @@ def coletarNTermosMaisFrequentes(n: int, textos: list[list[str]]) -> list[str]:
     # Vetor dos n termos mais frequentes
     return [termo for termo,_ in termosOrdenados[:n]]
 
-def GerarGrafoCoocorrencia(texts: list[list[str]], n: int, w: int = 5):
+# Função que gera o grafo de coocorrencia baseado no pseudocodigo
+# o parametro grafoRepresentação é para dizer se a função irar usar a representação de grafo do tipo matriz ou lista
+def GerarGrafoCoocorrencia(grafoRepresentacao: str, texts: list[list[str]], n: int, w: int = 5) -> Grafo:
     Voc = coletarNTermosMaisFrequentes(n, texts)
     # grafo com n vertices, que também armazena o termo relativo ao i-nesimo vertice
-    grafo = GrafoLista(n, Voc)
+    if grafoRepresentacao == "lista":
+        grafo = GrafoLista(n, Voc)
+    else:
+        grafo = GrafoMatriz(n, Voc)
+
     for T in texts:
         # filtra apenas as palavras do texto que esteja nos n termos mais frequentes
         palavras = [p for p in T if p in Voc]
@@ -139,38 +147,92 @@ def exportToCSV(grafo: Grafo):
                 row.append(grafo.getTermo(vertice))
             csvWriter.writerow(row)
 
-#texts = extrairTextosBaseDeDados("./textos")
-#graph = GerarGrafoCoocorrencia(texts, 500)
-#exportToCSV(graph)
+# Função para fazer os benchmarks esperados
+def medirDesempenho(quantidadeExecucoes: int = 1000000):
+    # Conjunto de 500, 1000 e 2000 termos
+    nTermos = [500, 1000, 2000]
+    texts = extrairTextosBaseDeDados("./textos")
+    # Salva os tempos medios para criar os grafos, segue essa ordem de tempos
+    # Força Bruta/Lista, Força Bruta/Matriz, Tarjan/Lista, Tarjan/Matriz
+    dadosParaGrafico = {500: [], 1000: [], 2000: []}
+    for n in nTermos:
+        # Função que gera o grafo de coocorrencia, é pedido para gerar o vocabulario de n termos
+        # isso é feito dentro da propria função seguindo o pseudocodigo
+        # Apesar da função retornar o tipo generico Grafo,o codigo ira gerar um grafo em lista ou matriz baseado no parametro
+        grafoEmLista = GerarGrafoCoocorrencia("lista", texts, n)
+        grafoEmMatriz = GerarGrafoCoocorrencia("matriz", texts, n)
 
-grafoTeste = GrafoLista(9, ['1','2','3','4','5','6','7','8','9'])
-# componente biconexa 1
-grafoTeste.adicionarAresta(0,1)
-grafoTeste.adicionarAresta(0,2)
-grafoTeste.adicionarAresta(1,0)
-grafoTeste.adicionarAresta(1,2)
-grafoTeste.adicionarAresta(1,4)
-grafoTeste.adicionarAresta(2,0)
-grafoTeste.adicionarAresta(2,1)
-# componente biconexa 2
-grafoTeste.adicionarAresta(4,1)
-grafoTeste.adicionarAresta(4,3)
-grafoTeste.adicionarAresta(4,5)
-grafoTeste.adicionarAresta(3,4)
-grafoTeste.adicionarAresta(3,5)
-grafoTeste.adicionarAresta(5,4)
-grafoTeste.adicionarAresta(5,3)
-grafoTeste.adicionarAresta(5,6)
-# componente biconexa
-grafoTeste.adicionarAresta(6,5)
-grafoTeste.adicionarAresta(6,8)
-grafoTeste.adicionarAresta(6,7)
-grafoTeste.adicionarAresta(7,6)
-grafoTeste.adicionarAresta(7,8)
-grafoTeste.adicionarAresta(8,6)
-grafoTeste.adicionarAresta(8,7)
-for vertice in range(9):
-    print(f"{grafoTeste.getTermo(vertice)}: {[grafoTeste.getTermo(x) for x in grafoTeste.getArestas(vertice)]}")
+        # Cada uma das 4 combinações são exectuadas abaixo
+        print(f"Para um conjunto de {n} termos:")
+
+        # Combinação Força bruta/Lista
+        inicioFL = time.perf_counter()
+        for i in range(quantidadeExecucoes):
+            algoritmoForcaBruta(grafoEmLista)
+        fimFL = time.perf_counter()
+        tempoMedioForcaBrutaLista = ((fimFL-inicioFL)/quantidadeExecucoes)*1000
+        print(f"    A combinação Força Bruta/Lista tomou um tempo médio de: {tempoMedioForcaBrutaLista} milisegundos")
+
+        # Combinação Força bruta/Matriz
+        inicioFM = time.perf_counter()
+        for i in range(quantidadeExecucoes):
+            algoritmoForcaBruta(grafoEmMatriz)
+        fimFM = time.perf_counter()
+        tempoMedioForcaBrutaMatriz = ((fimFM-inicioFM)/quantidadeExecucoes)*1000
+        print(f"    A combinação Força Bruta/Matriz tomou um tempo médio de: {tempoMedioForcaBrutaMatriz} milisegundos")
+
+        # Combinação Tarjan/Lista
+        inicioTL = time.perf_counter()
+        for i in range(quantidadeExecucoes):
+            algoritmoTarjan(grafoEmLista)
+        fimTL = time.perf_counter()
+        tempoMedioTarjanLista = ((fimTL-inicioTL)/quantidadeExecucoes)*1000
+        print(f"    A combinação Tarjan/Lista tomou um tempo médio de: {tempoMedioTarjanLista} milisegundos")
+
+        # Combinação Tarjan/Matriz
+        inicioTM = time.perf_counter()
+        for i in range(quantidadeExecucoes):
+            algoritmoTarjan(grafoEmMatriz)
+        fimTM = time.perf_counter()
+        tempoMedioTarjanMatriz = ((fimTM-inicioTM)/quantidadeExecucoes)*1000
+        print(f"    A combinação Tarjan/Matriz tomou um tempo médio de: {tempoMedioTarjanMatriz} milisegundos\n")
+
+        # Salva os dados para posteriormente criar o grafico
+        dadosParaGrafico[n]= [tempoMedioForcaBrutaLista, tempoMedioForcaBrutaMatriz, tempoMedioTarjanLista, tempoMedioTarjanMatriz]
+
+    plotarGrafico(dadosParaGrafico)
+
+def plotarGrafico(dados: dict[int, list[int]]):
+    tamanhos = [500,1000, 2000]
+    # Inicializar as listas para cada combinação de execução
+    fb_lista = []    # Força Bruta / Lista
+    fb_matriz = []   # Força Bruta / Matriz
+    tarjan_lista = []  # Tarjan / Lista
+    tarjan_matriz = [] # Tarjan / Matriz
+    # Popular os tempos médios correspondentes
+    for tamanho in tamanhos:
+        tempos = dados[tamanho]
+        fb_lista.append(tempos[0])
+        fb_matriz.append(tempos[1])
+        tarjan_lista.append(tempos[2])
+        tarjan_matriz.append(tempos[3])
+
+    # Plotar as curvas
+    plt.figure(figsize=(10, 6))
+    plt.plot(tamanhos, fb_lista, marker='o', label='Força Bruta / Lista')
+    plt.plot(tamanhos, fb_matriz, marker='s', label='Força Bruta / Matriz')
+    plt.plot(tamanhos, tarjan_lista, marker='^', label='Tarjan / Lista')
+    plt.plot(tamanhos, tarjan_matriz, marker='x', label='Tarjan / Matriz')
+    plt.xticks(tamanhos)
+    # Adiciona título e rótulos
+    plt.title('Comparação de Tempo Médio de Execução')
+    plt.xlabel('Tamanho do Vocabulário (n)')
+    plt.ylabel('Tempo Médio de Execução (ms)')
+    plt.legend()
+    plt.grid(True)
+    plt.tight_layout()
+    # Mostra o gráfico
+    plt.show()
 
 # Algoritmo de tarjan. A funcao retorna uma lista de lista com as componentes fortemente conexas 
 # ou no caso do grafos não direcionados do exemplo as componentes biconexas
@@ -221,9 +283,62 @@ def algoritmoTarjan(grafo: Grafo):
     return componentes
 
 def algoritmoForcaBruta(grafo: Grafo) -> list[list[int]]:
-    return [[]]
+    # vetor que marca se um vertice ja foi visitado, inicio todos como falso
+    visitado = [False for _ in range(grafo.getQuantidadeDeVertices())]
+    componentes = []
 
-componentes = algoritmoTarjan(grafoTeste)
-componentes2 = algoritmoForcaBruta(grafoTeste)
-print(componentes)
-print(componentes2)
+    def dfs(vertice: int, component: list[int]):
+        # Marca o vertice atual como visitado
+        visitado[vertice] = True
+        component.append(vertice)
+        # percorre todos os vizinhos do vertice atual
+        for vizinho in grafo.getArestas(vertice):
+            if not visitado[vizinho]:
+                dfs(vizinho, component)
+
+
+    for vertice in range(grafo.getQuantidadeDeVertices()):
+        if not visitado[vertice]:
+            componente = []
+            dfs(vertice, componente)
+            componentes.append(componente)
+    
+    return componentes
+
+#componentes = algoritmoTarjan(grafoTeste)
+#componentes2 = algoritmoForcaBruta(grafoTeste)
+#print(componentes)
+#print(componentes2)
+
+
+grafoTeste = GrafoLista(9, ['1','2','3','4','5','6','7','8','9'])
+# componente biconexa 1
+grafoTeste.adicionarAresta(0,1)
+grafoTeste.adicionarAresta(0,2)
+grafoTeste.adicionarAresta(1,0)
+grafoTeste.adicionarAresta(1,2)
+grafoTeste.adicionarAresta(1,4)
+grafoTeste.adicionarAresta(2,0)
+grafoTeste.adicionarAresta(2,1)
+# componente biconexa 2
+grafoTeste.adicionarAresta(4,1)
+grafoTeste.adicionarAresta(4,3)
+grafoTeste.adicionarAresta(4,5)
+grafoTeste.adicionarAresta(3,4)
+grafoTeste.adicionarAresta(3,5)
+grafoTeste.adicionarAresta(5,4)
+grafoTeste.adicionarAresta(5,3)
+grafoTeste.adicionarAresta(5,6)
+# componente biconexa
+grafoTeste.adicionarAresta(6,5)
+grafoTeste.adicionarAresta(6,8)
+grafoTeste.adicionarAresta(6,7)
+grafoTeste.adicionarAresta(7,6)
+grafoTeste.adicionarAresta(7,8)
+grafoTeste.adicionarAresta(8,6)
+grafoTeste.adicionarAresta(8,7)
+
+#texts = extrairTextosBaseDeDados("./textos")
+#graph = GerarGrafoCoocorrencia("matriz", texts, 500)
+#exportToCSV(graph)
+medirDesempenho(10)
