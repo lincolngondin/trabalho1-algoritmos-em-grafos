@@ -1,0 +1,1 @@
+We use Boij-Söderberg theory to provide some order of magnitude bounds on algebraic Betti numbers.

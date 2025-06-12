@@ -1,0 +1,1 @@
+We present simple proofs of a~discrete fractional and non-fractional Hardy inequality, Our constants are explicit, but not optimal. In the class of power weights, we get a~complete picture of when the non-fractional Hardy inequality holds, for any dimension $d$ of the lattice $\Z^d$ and exponent $0<p<\infty$.

@@ -1,0 +1,1 @@
+We prove that any class of bipartite graphs with linear neighborhood complexity has bounded odd chromatic number. As a result, if $\mathcal{G}$ is the class of all circle graphs, or if $\mathcal{G}$ is any class with bounded twin-width, bounded merge-width, or a forbidden vertex-minor, then $\mathcal{G}$ is $\chi_{odd}$-bounded.

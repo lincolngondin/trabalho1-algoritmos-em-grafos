@@ -1,0 +1,1 @@
+In this paper, we prove that finite groups with semidihedral Sylow 2-subgroup have Class-preserving Coleman outer automorphism group of odd order. As a consequence, these groups satisfy the normalizer problem. In particular, we extend some existing results in the literature concerning class-preserving Coleman automorphisms of finite groups with semidihedral Sylow 2-subgroups.

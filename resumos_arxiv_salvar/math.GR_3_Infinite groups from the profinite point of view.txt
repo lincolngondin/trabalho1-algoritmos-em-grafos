@@ -1,0 +1,1 @@
+We survey recent work ranging around the question in how far a group, or a property of a group, is determined by the set of finite quotient groups. Our focus lies on $S$-arithmetic groups, branch groups, and their relatives.

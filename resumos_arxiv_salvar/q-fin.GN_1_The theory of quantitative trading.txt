@@ -1,0 +1,1 @@
+This book consists of a selection of articles divided into three main themes: Statistics, Quantitative Trading, Psychology. These three arguments are indispensable for the development of a quantitative trading system. The order of the articles was chosen so as to constitute a single logical reasoning that develops progressively.

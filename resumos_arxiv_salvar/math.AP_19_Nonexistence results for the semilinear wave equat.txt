@@ -1,0 +1,1 @@
+We investigate the semilinear wave equation with potential on weighted graphs. We establish sufficient conditions for the nonexistence of global-in-time solutions. Both nonnegative and sign-changing solutions are considered. In particular, the proof for sign-changing solutions relies on a novel technique for this type of result.

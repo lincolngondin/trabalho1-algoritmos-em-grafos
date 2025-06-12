@@ -1,0 +1,1 @@
+In this paper, we find bounds for the eigenvalues of matrix polynomials. In particular, we find generalizations of Cauchy's classical Theorem for distribution of eigenvalues of matrix polynomial.

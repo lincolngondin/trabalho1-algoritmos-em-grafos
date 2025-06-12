@@ -4,6 +4,15 @@ from itertools import combinations
 import csv
 import time
 import matplotlib.pyplot as plt
+import sys
+import nltk
+from nltk.corpus import stopwords
+
+nltk.download('stopwords')
+stop_words = set(stopwords.words('english'))
+
+# Aumento o nivel maximo de recursão pois a funcao algoritmoForcaBruta erro de recursão maxima
+sys.setrecursionlimit(2000)
 
 # classe base de grafos que as diferentes representações seguem
 class Grafo:
@@ -73,7 +82,8 @@ class GrafoMatriz(Grafo):
 # extrai todos as termos de um texto -
 def extrairTermos(text: str) -> list[str]:
     # retorna apenas as palavras, ignorando numeros e pontuações, mas incluindo palavras acentuadas, tambem coloca as palavras em minusculo
-    return [p.lower() for p in re.findall(r'\b[a-zA-ZÀ-ÿ]+\b', text)]
+    palavras = [p.lower() for p in re.findall(r'\b[a-zA-ZÀ-ÿ]+\b', text)]
+    return [p for p in palavras if p not in stop_words]
 
 # extrair todos os termos da base de dados -
 # cada texto da base de dados vai virar uma lista com todos os termos
@@ -151,7 +161,7 @@ def exportToCSV(grafo: Grafo):
 def medirDesempenho(quantidadeExecucoes: int = 1000000):
     # Conjunto de 500, 1000 e 2000 termos
     nTermos = [500, 1000, 2000]
-    texts = extrairTextosBaseDeDados("./textos")
+    texts = extrairTextosBaseDeDados("./resumos_arxiv_salvar")
     # Salva os tempos medios para criar os grafos, segue essa ordem de tempos
     # Força Bruta/Lista, Força Bruta/Matriz, Tarjan/Lista, Tarjan/Matriz
     dadosParaGrafico = {500: [], 1000: [], 2000: []}
@@ -161,6 +171,10 @@ def medirDesempenho(quantidadeExecucoes: int = 1000000):
         # Apesar da função retornar o tipo generico Grafo,o codigo ira gerar um grafo em lista ou matriz baseado no parametro
         grafoEmLista = GerarGrafoCoocorrencia("lista", texts, n)
         grafoEmMatriz = GerarGrafoCoocorrencia("matriz", texts, n)
+
+        # Cria um arquivo de visualiazação para ser lido pelo gephi no caso n = 500
+        if n == 500:
+            exportToCSV(grafoEmLista)
 
         # Cada uma das 4 combinações são exectuadas abaixo
         print(f"Para um conjunto de {n} termos:")
@@ -338,7 +352,4 @@ grafoTeste.adicionarAresta(7,8)
 grafoTeste.adicionarAresta(8,6)
 grafoTeste.adicionarAresta(8,7)
 
-#texts = extrairTextosBaseDeDados("./textos")
-#graph = GerarGrafoCoocorrencia("matriz", texts, 500)
-#exportToCSV(graph)
 medirDesempenho(10)

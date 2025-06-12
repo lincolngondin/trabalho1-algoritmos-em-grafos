@@ -1,0 +1,1 @@
+We exhibit a family of second-order hyperbolic differential operators presenting spectral transition of the Hamilton map. As a consequence we prove that the Cauchy problem is not locally solvable at the origin in Gevrey classes of order greater than some fixed value. The main feature of these operators is that they may all have bicharacteristics tangent to the double manifold.

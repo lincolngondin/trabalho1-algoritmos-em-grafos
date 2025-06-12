@@ -1,0 +1,1 @@
+We perform a mass constrained phase-field approximation for a model that describes the epitaxial growth of a two-dimensional thin film on a substrate in the context of linearised elasticity. The approximated model encodes a variable on the free surface of the film, that physically is interpreted as an adatom density.

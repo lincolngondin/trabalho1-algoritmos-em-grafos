@@ -1,0 +1,1 @@
+We first study subextensions of m-subharmonic functions in weighted energy classes with given boundary values. The results are used to approximate an m-subharmonic function in weighted energy classes with given boundary values by an increasing sequence of m-subharmonic functions defined on larger domains.

@@ -1,0 +1,1 @@
+In this paper, we show that every monadic ortholattice is isomorphic to a functional one, thereby resolving a recent question posed by Harding. We then study certain substitution-free reducts of the polyadic ortholattices, which we call locally finite $\sigma$-free polyadic ortholattices, and provide an analogous functional representation result.

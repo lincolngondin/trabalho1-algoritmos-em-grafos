@@ -1,0 +1,1 @@
+We study birational quasi-isomorphisms between normal Noetherian domains endowed with cluster structures of geometric type. We prove an analogue of the Starfish lemma that allows one to transfer various cluster and algebraic properties of one variety onto another. In particular, we develop tools for proving that an upper cluster algebra equals the given commutative ring.

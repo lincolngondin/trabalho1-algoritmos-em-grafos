@@ -1,0 +1,1 @@
+We provide some difference triangle sets with scopes that improve upon the best known values. These are found with purpose-built digital circuits realized with field-programmable gate arrays (FPGAs) rather than software algorithms running on general-purpose processors.

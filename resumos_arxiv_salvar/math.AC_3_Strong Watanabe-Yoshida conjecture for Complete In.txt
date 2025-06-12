@@ -1,0 +1,1 @@
+In this paper, we prove the strong form of the Watanabe-Yoshida conjecture for complete intersection singularities in every positive characteristic. In characteristics 2 and 3, we explicitly compute the Hilbert-Kunz functions of the A1 and A2 singularities.

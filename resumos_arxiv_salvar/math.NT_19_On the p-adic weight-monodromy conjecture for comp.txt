@@ -1,0 +1,1 @@
+We give a proof of the $p$-adic weight monodromy conjecture for scheme-theoretic complete intersections in projective smooth toric varieties. The strategy is based on Scholze's proof in the $\ell$-adic setting, which we adapt using homotopical results developed in the context of rigid analytic motives.

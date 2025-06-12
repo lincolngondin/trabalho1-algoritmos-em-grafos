@@ -1,0 +1,1 @@
+We estimate the asymptotic growth of reciprocal conjugacy classes in Hecke groups using their free product structure and word lengths of reciprocal elements. Our approach is different from other works in this direction and uses tools from basic probability theory.

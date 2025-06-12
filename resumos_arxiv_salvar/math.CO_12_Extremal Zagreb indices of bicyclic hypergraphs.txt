@@ -1,0 +1,1 @@
+The Zagreb index of a hypergraph is defined as the sum of the squares of the degrees of its vertices. A connected $k$-uniform hypergraph with $n$ vertices and $m$ edges is called bicyclic if $n=m(k-1)-1$. In this paper, we determine the hypergraphs with the maximum and minimum Zagreb indices among all linear bicyclic uniform hypergraphs.

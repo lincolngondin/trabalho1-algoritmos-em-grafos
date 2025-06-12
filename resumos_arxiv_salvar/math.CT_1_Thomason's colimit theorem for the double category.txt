@@ -1,0 +1,1 @@
+We show that, for any 2-category $C$ and 2-functor $F\colon C \to Cat$, the double category of elements $\iint_C F$ introduced by Grandis and Paré satisfies a version of Thomason's colimit theorem; that is, there is a weak homotopy equivalence $B hocolim F\simeq B(\iint_C F)$.

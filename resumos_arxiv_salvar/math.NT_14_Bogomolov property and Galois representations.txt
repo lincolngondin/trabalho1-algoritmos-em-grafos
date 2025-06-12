@@ -1,0 +1,1 @@
+In 2013 P. Habegger proved the Bogomolov property for the field generated over Q by the torsion points of a rational elliptic curve. We explore the possibility of applying the same strategy of proof to the case of field extensions fixed by the kernel of some modular Galois representations.

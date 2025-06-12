@@ -1,0 +1,1 @@
+We refine the weighted type graph technique for proving termination of double pushout (DPO) graph transformation systems. We increase the power of the approach for graphs, we generalize the technique to other categories, and we allow for variations of DPO that occur in the literature.

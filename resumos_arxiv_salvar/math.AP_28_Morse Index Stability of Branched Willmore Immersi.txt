@@ -1,0 +1,1 @@
+We show the Morse index stability for sequences of Willmore immersions of bounded energy without assuming that the limiting immersion and the bubbles are free of branch points.

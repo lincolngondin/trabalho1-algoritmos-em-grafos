@@ -1,0 +1,1 @@
+We show that every unitary positive energy representation W of the Virasoro algebra exponentiates to a holomorphic *-representation of the semigroup of annuli by bounded operators on the Hilbert space completion of W. We use this to show that every representation of the Virasoro conformal net also carries a representation of the semigroup of annuli of the same kind.

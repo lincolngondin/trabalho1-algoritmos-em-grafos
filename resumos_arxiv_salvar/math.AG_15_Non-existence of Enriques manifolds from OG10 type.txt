@@ -1,0 +1,1 @@
+We use the LLV algebra to describe the action of a finite order automorphism on the total cohomology of a manifold of OG10 type. As an application, we prove that no Enriques manifolds arise as étale quotients of hyper-Kähler manifolds of OG10 type. This answers a question raised by Pacienza and Sarti.

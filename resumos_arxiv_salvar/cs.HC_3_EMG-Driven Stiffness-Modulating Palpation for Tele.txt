@@ -1,0 +1,1 @@
+In this work, we introduce HJ-Pal, a lightweight wearable haptic device that leverages EMG-driven honeycomb jamming to render muscle activation as kinesthetic feedback, enabling remote palpation for small muscle assessment in telerehabilitation.

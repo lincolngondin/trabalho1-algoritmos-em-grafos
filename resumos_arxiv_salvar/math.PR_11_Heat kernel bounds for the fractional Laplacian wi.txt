@@ -1,0 +1,1 @@
+Motivated by the study of relativistic atoms, we prove sharp heat kernel bounds for the Hardy operator $(-\Delta)^{\alpha/2}-\kappa|x|^{-\alpha}$ acting on functions of the form $u(|x|) |x|^{\ell} Y_{\ell,m}(x/|x|)$ in $L^2(\R^d)$, when $\alpha\in(0,2]\cap(0,d+2\ell)$.

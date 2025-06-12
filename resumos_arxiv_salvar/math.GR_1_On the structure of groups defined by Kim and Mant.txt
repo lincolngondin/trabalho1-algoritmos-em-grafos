@@ -1,0 +1,1 @@
+We study the structure of a series of groups $\Gamma_n^4$ defined by Kim and Manturov. We show that the groups are finite for all $n \ge 6$ and in fact they are 2-step nilpotent $2$-groups.

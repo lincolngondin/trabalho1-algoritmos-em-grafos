@@ -1,0 +1,1 @@
+Kottwitz suggested to study all extended pure inner forms together in the local Langlands correspondence for linear reductive groups. We extend this philosophy to a large class of covers, including those defined by Brylinski and Deligne, and explain its relation with Weissman's observation that L-packets for covers are sometimes empty.

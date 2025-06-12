@@ -1,0 +1,1 @@
+This article aims to extend classical homological results about the rational normal curves to analogues in weighted projective spaces. Results include determinantality and nonstandard versions of quadratic generation and the Koszul property.

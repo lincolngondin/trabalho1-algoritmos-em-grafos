@@ -1,0 +1,2 @@
+This is a continuation of our earlier work [14] on the Monge-Ampère obstacle problem \[ \det D^2 v = v^q \chi_{\{v>0\}}, \quad v \geq 0 \text{ convex} \] with $q \in [0,n)$, where we studied the regularity of the strictly convex part of the free boundary.
+In this work, we examine the non-strictly convex part of the free boundary and establish optimal dimension bounds for its flat portion. Additionally, we investigate the strong maximum principle and a stability property for this Monge-Ampère obstacle problem.

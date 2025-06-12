@@ -1,0 +1,1 @@
+We show that the existence of a strongly convex function with a Lipschitz derivative on a Banach space already implies that the space is isomorphic to a Hilbert space. Similarly, if both a function and its convex conjugate are $C^2$ then the underlying space is also isomorphic to a Hilbert space.

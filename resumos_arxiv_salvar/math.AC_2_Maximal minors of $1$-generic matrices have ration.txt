@@ -1,0 +1,1 @@
+We show that the quotient ring by the ideal of maximal minors of a $1$-generic matrix has rational singularities. This answers a conjecture of Eisenbud (1988) that such rings are normal, and generalizes a result of Conca, Mostafazadehfard, Singh and Varbaro (2018) that generic Hankel determinantal rings have rational singularities in characteristic zero.

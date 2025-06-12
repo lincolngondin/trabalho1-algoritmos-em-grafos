@@ -1,0 +1,1 @@
+Studying the behavior of real and complex geodesics we provide sharp estimates for the Kobayashi distance, the Lempert function, and the Carathéodory distance on $\mathcal{C}^{2,\alpha}$-smooth strongly pseudoconvex domains. Similar estimates are also provided for the Bergman distance on strongly pseudoconvex domains with $\mathcal{C}^{3,1}$-boundary.

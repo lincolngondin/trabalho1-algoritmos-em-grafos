@@ -1,0 +1,10 @@
+In this article we describe the
+$G_{comp}\times G_{comp}$-equivariant topological $K$-ring of a {\em
+cellular} toroidal embedding $\mathbb{X}$ of a complex connected
+reductive algebraic group $G$. In particular, our results extend the
+results in \cite{u1} and \cite{u2} on the regular embeddings of $G$,
+to the equivariant topological $K$-ring of a larger class of
+(possibly singular) cellular toroidal embeddings. They are also a
+topological analogue of the results in \cite{gon} on the operational
+equivariant algebraic $K$-ring, for cellular toroidal
+embeddings.
