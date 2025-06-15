@@ -1,9 +1,11 @@
 import time
 from algoritmos.tarjan import algoritmoTarjan
 from algoritmos.forca_bruta import algoritmoForcaBruta
-from utils.exportacao import exportToCSV, gerarRelatorioDesempenho
+from utils.exportacao import exportToCSV
 from utils.gerarGrafo import inicializarGrafos
 from visualizacao.grafico import plotarGrafico
+import datetime
+from utils.exportacao import gerar_relatorio_pdf_completo  # ajuste o import conforme seu projeto
 
 def medir_tempo_algoritmo(nome_algoritmo: str, representacao: str, funcao, grafo, quantidade_execucoes: int) -> float:
     # Mede o tempo médio de execução de um algoritmo sobre um grafo, repetindo várias vezes
@@ -17,28 +19,23 @@ def medir_tempo_algoritmo(nome_algoritmo: str, representacao: str, funcao, grafo
     return tempo_medio
 
 def medirDesempenho(quantidadeExecucoes: int = 1000000):
-    # Função principal para medir o desempenho de algoritmos em diferentes representações de grafos
-    # Executa os testes com 3 tamanhos diferentes e armazena os resultados para gerar gráfico comparativo
-
-    dadosParaGrafico = {500: [], 1000: [], 2000: []}  # dicionário para armazenar os tempos para o gráfico
-    nTermos = [500, 1000, 2000]  # diferentes tamanhos do grafo a serem testados
+    dadosParaGrafico = {500: [], 1000: [], 2000: []}
+    nTermos = [500, 1000, 2000]
 
     for n in nTermos:
-        grafoEmLista, grafoEmMatriz = inicializarGrafos(n)  # inicializa grafos nas duas representações (lista e matriz)
+        grafoEmLista, grafoEmMatriz = inicializarGrafos(n)
 
         print(f"Para um conjunto de {n} termos:")
 
-        # Mede o tempo médio de execução para cada combinação de algoritmo e representação
         tempoMedioForcaBrutaLista  = medir_tempo_algoritmo("Força Bruta", "Lista", algoritmoForcaBruta, grafoEmLista, quantidadeExecucoes)
         tempoMedioForcaBrutaMatriz = medir_tempo_algoritmo("Força Bruta", "Matriz", algoritmoForcaBruta, grafoEmMatriz, quantidadeExecucoes)
         tempoMedioTarjanLista      = medir_tempo_algoritmo("Tarjan", "Lista", algoritmoTarjan, grafoEmLista, quantidadeExecucoes)
         tempoMedioTarjanMatriz     = medir_tempo_algoritmo("Tarjan", "Matriz", algoritmoTarjan, grafoEmMatriz, quantidadeExecucoes)
         print()
-
+        
         if n == 500:
-            exportToCSV(grafoEmLista)  # exporta a estrutura do grafo de 500 termos para CSV
+            exportToCSV(grafoEmLista)
 
-        # Armazena os tempos coletados no dicionário para futura plotagem
         dadosParaGrafico[n] = [
             tempoMedioForcaBrutaLista,
             tempoMedioForcaBrutaMatriz,
@@ -46,5 +43,17 @@ def medirDesempenho(quantidadeExecucoes: int = 1000000):
             tempoMedioTarjanMatriz
         ]
 
-    plotarGrafico(dadosParaGrafico)  # gera o gráfico com os dados de desempenho
-    gerarRelatorioDesempenho(dadosParaGrafico) # gera o relatorio com dados de desempenho
+    # Criar nome do arquivo com timestamp pra salvar vários relatórios
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    nome_arquivo = f"relatorios/relatorio_desempenho_{timestamp}.pdf"
+
+    # Certifique-se que a pasta "relatorios" existe
+    import os
+    os.makedirs("relatorios", exist_ok=True)
+
+    # Gerar o relatório PDF com os dados coletados
+    gerar_relatorio_pdf_completo(dadosParaGrafico, quantidadeExecucoes, nome_arquivo)
+
+    # Mostrar gráfico (opcional)
+    plotarGrafico(dadosParaGrafico)
+
