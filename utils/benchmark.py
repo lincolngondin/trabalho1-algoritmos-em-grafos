@@ -1,7 +1,7 @@
 import time
 from algoritmos.tarjan import algoritmoTarjan
 from algoritmos.forca_bruta import algoritmoForcaBruta
-from utils.exportacao import exportToCSV
+from utils.exportacao import exportToCSV, gerarRelatorioDesempenho
 from utils.gerarGrafo import inicializarGrafos
 from visualizacao.grafico import plotarGrafico
 
@@ -47,3 +47,4 @@ def medirDesempenho(quantidadeExecucoes: int = 1000000):
         ]
 
     plotarGrafico(dadosParaGrafico)  # gera o gráfico com os dados de desempenho
+    gerarRelatorioDesempenho(dadosParaGrafico) # gera o relatorio com dados de desempenho

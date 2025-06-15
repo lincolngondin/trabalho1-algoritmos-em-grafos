@@ -1,0 +1,21 @@
+Relatório de Desempenho dos Algoritmos de Componentes Conexas
+--------------------------------------------------------------
+
+Tamanho do vocabulário: 500
+  Força Bruta / Lista  : 1.148130 ms
+  Força Bruta / Matriz : 27.426790 ms
+  Tarjan / Lista       : 1.077100 ms
+  Tarjan / Matriz      : 27.061740 ms
+
+Tamanho do vocabulário: 1000
+  Força Bruta / Lista  : 3.980820 ms
+  Força Bruta / Matriz : 98.001170 ms
+  Tarjan / Lista       : 1.626060 ms
+  Tarjan / Matriz      : 67.782780 ms
+
+Tamanho do vocabulário: 2000
+  Força Bruta / Lista  : 10.650740 ms
+  Força Bruta / Matriz : 246.843230 ms
+  Tarjan / Lista       : 2.156510 ms
+  Tarjan / Matriz      : 243.950150 ms
+
