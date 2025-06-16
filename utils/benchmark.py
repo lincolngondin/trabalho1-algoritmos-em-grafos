@@ -1,11 +1,12 @@
 import time
+import os
 from algoritmos.tarjan import algoritmoTarjan
 from algoritmos.forca_bruta import algoritmoForcaBruta
 from utils.exportacao import exportToCSV
 from utils.gerarGrafo import inicializarGrafos
 from visualizacao.grafico import plotarGrafico
 import datetime
-from utils.exportacao import gerar_relatorio_pdf_completo  # ajuste o import conforme seu projeto
+from utils.exportacao import gerar_relatorio_pdf_completo 
 
 def medir_tempo_algoritmo(nome_algoritmo: str, representacao: str, funcao, grafo, quantidade_execucoes: int) -> float:
     # Mede o tempo médio de execução de um algoritmo sobre um grafo, repetindo várias vezes
@@ -23,7 +24,7 @@ def medirDesempenho(quantidadeExecucoes: int = 1000000):
     nTermos = [500, 1000, 2000]
 
     for n in nTermos:
-        grafoEmLista, grafoEmMatriz = inicializarGrafos(n)
+        grafoEmLista, grafoEmMatriz = inicializarGrafos(n) # n = quantidade de termos mais frequentes, segundo parametro por defalt = 5 (janela de palavras)
 
         print(f"Para um conjunto de {n} termos:")
 
@@ -48,7 +49,6 @@ def medirDesempenho(quantidadeExecucoes: int = 1000000):
     nome_arquivo = f"relatorios/relatorio_desempenho_{timestamp}.pdf"
 
     # Certifique-se que a pasta "relatorios" existe
-    import os
     os.makedirs("relatorios", exist_ok=True)
 
     # Gerar o relatório PDF com os dados coletados
