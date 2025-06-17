@@ -6,4 +6,4 @@ nltk.download('stopwords')
 sys.setrecursionlimit(2000)
 
 if __name__ == "__main__":
-    medirDesempenho(10)
+    medirDesempenho(10000)

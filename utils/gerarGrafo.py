@@ -33,8 +33,8 @@ def GerarGrafoCoocorrencia(grafoRepresentacao: str, texts: list[list[str]], orig
 def inicializarGrafos(QuantidadeDeTermosPgeracaoDosGrafos: int = 50, TamanhoDaJanela: int = 5):
     # Função auxiliar para preparar os dois grafos (lista e matriz) com base nos textos extraídos
 
-    texts = extrairTextosBaseDeDados("./textosDeTeste")  # textos pré-processados para frequência
-    textosOriginais = TextosOriginaisParaComparar("./textosDeTeste")  # textos completos para análise de coocorrência
+    texts = extrairTextosBaseDeDados("resumos_arxiv_salvar")  # textos pré-processados para frequência. use ./textosDeTeste para usar os textos de teste
+    textosOriginais = TextosOriginaisParaComparar("resumos_arxiv_salvar")  # textos completos para análise de coocorrência. use ./textosDeTeste para usar os textos de teste
 
     # Gera os grafos de coocorrência em ambas as representações
     grafoEmLista  = GerarGrafoCoocorrencia("lista", texts, textosOriginais, QuantidadeDeTermosPgeracaoDosGrafos, TamanhoDaJanela)
